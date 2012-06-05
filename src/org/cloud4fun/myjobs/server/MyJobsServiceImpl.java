@@ -1,10 +1,17 @@
 package org.cloud4fun.myjobs.server;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.cloud4fun.myjobs.client.MyJobsService;
+import org.cloud4fun.myjobs.server.hibernate.Project;
 import org.cloud4fun.myjobs.server.hibernate.Task;
+import org.cloud4fun.myjobs.server.hibernate.WorkUnit;
 import org.cloud4fun.myjobs.shared.FieldVerifier;
+import org.cloud4fun.myjobs.shared.ProjectDTO;
+import org.cloud4fun.myjobs.shared.TaskDTO;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -51,12 +58,97 @@ public class MyJobsServiceImpl extends RemoteServiceServlet implements
 				.replaceAll(">", "&gt;");
 	}
 	
-	public List<Task> getTasks()
+	public List<Task> getDBTasks()
 	{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		List result = session.createQuery("from Task").list();
+		List<Task> result = session.createQuery("from Task").list();
 		session.getTransaction().commit();
 		return result;
+	}
+	
+	public List<Project> getDBProjects()
+	{
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		List<Project> result = session.createQuery("from Project").list();
+		session.getTransaction().commit();
+		return result;
+	}
+
+	@Override
+	public List<ProjectDTO> getProjects() throws IllegalArgumentException 
+	{
+		List<Project> projects_db = getDBProjects();
+		List<ProjectDTO> projects_dto = new ArrayList<ProjectDTO>();
+		
+		Iterator<Project> it = projects_db.iterator();
+		while(it.hasNext())
+		{
+			projects_dto.add(createProjectDTO(it.next()));
+		}
+
+		return projects_dto;
+	}
+	
+	public ProjectDTO createProjectDTO(Project project)
+	{
+		return new ProjectDTO(project.getId(), project.getProject());
+	}
+	
+	public TaskDTO createTaskDTO(Task task)
+	{
+		return new TaskDTO(task.getId(), task.getTask(), task.getDur(), task.getFinished(), task.getDue());
+	}
+
+	@Override
+	public List<TaskDTO> getTasks(List<ProjectDTO> projects)
+			throws IllegalArgumentException {
+		
+		if (projects.size() == 0)
+			return null;
+		
+		// result list
+		List<TaskDTO> result = new ArrayList<TaskDTO>();
+		
+		// create the id parameter list of project ids
+		ArrayList<Integer> project_ids = new ArrayList<Integer>();
+		Iterator<ProjectDTO> it = projects.iterator();
+		while (it.hasNext())
+			project_ids.add(it.next().getId());
+		
+		// hibernate query string
+		String hql = "select distinct a from Task a " +
+                "join a.projects t " +
+                "where t.id in (:ids)";
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		Query query = session.createQuery(hql);
+		query.setParameterList("ids", project_ids);
+		List<Task> tasks = query.list();
+		
+		session.getTransaction().commit();
+		
+		Iterator<Task> taskIt = tasks.iterator();
+		while (taskIt.hasNext()) 
+			result.add(createTaskDTO(taskIt.next()));
+		return result;
+		
+	}
+
+	@Override
+	public String addWorkUnit(TaskDTO task) throws IllegalArgumentException {
+		
+		WorkUnit wu = new WorkUnit();
+		wu.setTaskId(task.getId());
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		session.persist(wu);
+		
+		session.getTransaction().commit();// TODO Auto-generated method stub
+		return "Added a work unit for " + task.getTask();
 	}
 }

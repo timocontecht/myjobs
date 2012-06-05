@@ -9,9 +9,9 @@ import java.util.Date;
  */
 public class WorkUnit implements java.io.Serializable {
 
-	private Integer id;
+	private Integer id = null;
 	private Integer taskId;
-	private Date workedOn;
+	private Date workedOn = null;
 
 	public WorkUnit() {
 	}

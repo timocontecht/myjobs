@@ -1,5 +1,9 @@
 package org.cloud4fun.myjobs.server.hibernate;
 
+import java.util.Set;
+
+import com.google.gwt.dev.util.collect.HashSet;
+
 // Generated May 7, 2012 6:31:57 AM by Hibernate Tools 3.4.0.CR1
 
 /**
@@ -9,6 +13,15 @@ public class Project implements java.io.Serializable {
 
 	private Integer id;
 	private String project;
+	Set<Task> tasks;
+
+	public Set<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
+	}
 
 	public Project() {
 	}
