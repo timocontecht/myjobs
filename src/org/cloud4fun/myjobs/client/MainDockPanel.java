@@ -3,6 +3,7 @@ package org.cloud4fun.myjobs.client;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.Panel;
 
 
 public class MainDockPanel extends Composite {
@@ -18,7 +19,7 @@ public class MainDockPanel extends Composite {
 	
 	private DockLayoutPanel thePanel;
 	private MainMenu mainMenu;
-	private TaskPanel taskPanel = null;
+	private Panel centerPanel = null;
 	
 	private MainDockPanel()
 	{
@@ -30,11 +31,20 @@ public class MainDockPanel extends Composite {
 	
 	public void addTaskPanel(TaskPanel tp)
 	{
-		if (taskPanel != null)
-			thePanel.remove(taskPanel);
+		if (centerPanel != null)
+			thePanel.remove(centerPanel);
 		
-		taskPanel = tp;
-		thePanel.add(taskPanel);
+		centerPanel = tp;
+		thePanel.add(centerPanel);
+	}
+	
+	public void addReportPanel(ReportPanel rp)
+	{
+		if (centerPanel != null)
+			thePanel.remove(centerPanel);
+		
+		centerPanel = rp;
+		thePanel.add(centerPanel);
 	}
 	
 	

@@ -28,7 +28,42 @@ h1 {
   color: red;
 }
 
+.gwt-Label
+{
+	font-variant: small-caps;
+	font-size: larger;
+}
+
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+input[type=radio],
+ input[type=checkbox] {
+     -webkit-appearance  : button;
+     float               : left;
+     margin-bottom       : -2em;
+     opacity             : 0;
+ }
+
+ label,
+ input[type=radio],
+ input[type=checkbox] {
+     width               : 100%;
+     display             : block;
+     padding             : 0.5em;
+     height              : 2em;
+ }
+ 
+ input[type=radio]:checked + label,
+ input[type=checkbox]:checked + label {
+     border              : medium solid #D3DEF6;
+ }
+
+ input[type=radio]:checked + label:after,
+ input[type=checkbox]:checked + label:after {
+     float               : right;
+     padding-right       : 0.5em;
+     content             : url(pics/check_mark.png);
+ }

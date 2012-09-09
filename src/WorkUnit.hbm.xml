@@ -12,7 +12,7 @@
             <column name="task_id" />
         </property>
         <property name="workedOn" type="timestamp">
-            <column name="worked_on" length="19" not-null="true" />
+            <column name="worked_on" length="19"  />
         </property>
     </class>
 </hibernate-mapping>

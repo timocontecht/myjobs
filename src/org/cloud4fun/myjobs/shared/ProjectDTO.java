@@ -3,6 +3,7 @@ package org.cloud4fun.myjobs.shared;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.cloud4fun.myjobs.server.hibernate.Project;
 
@@ -15,7 +16,16 @@ public class ProjectDTO implements Serializable
 	
 	private Integer id;
 	private String project;
+	private Set<TaskDTO> tasks;
 	
+	public Set<TaskDTO> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Set<TaskDTO> tasks) {
+		this.tasks = tasks;
+	}
+
 	public ProjectDTO()
 	{
 		

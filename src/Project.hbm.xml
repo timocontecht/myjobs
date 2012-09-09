@@ -11,5 +11,9 @@
         <property name="project" type="string">
             <column name="project" />
         </property>
+        <set name="tasks" table="TASK_PROJECT_REL" lazy="false">
+            <key column="project_id" />
+            <many-to-many class="org.cloud4fun.myjobs.server.hibernate.Task" column="task_id" />
+        </set>
     </class>
 </hibernate-mapping>

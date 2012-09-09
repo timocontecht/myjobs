@@ -12,12 +12,26 @@ public class TaskDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = -882345927726089029L;
 	
+	// database fields
 	private Integer id;
 	private String task;
 	private Integer dur;
 	private Boolean finished;
 	private Date due;
 	
+	// supporting fields
+	private Integer units_worked;
+	
+
+	
+	public Integer getWorkedUnits() {
+		return units_worked;
+	}
+
+	public void setWorkedUnits(Integer workedUnits) {
+		this.units_worked = workedUnits;
+	}
+
 	public TaskDTO ()
 	{
 		

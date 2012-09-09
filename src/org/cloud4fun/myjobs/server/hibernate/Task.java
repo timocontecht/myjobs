@@ -10,6 +10,7 @@ import java.util.Set;
  */
 public class Task implements java.io.Serializable {
 
+	// database fields
 	private Integer id;
 	private String task;
 	private Integer dur;
@@ -17,12 +18,15 @@ public class Task implements java.io.Serializable {
 	private Date due;
 	Set<Project> projects;
 
+	
+	
 	public Set<Project> getProjects() {
 		return projects;
 	}
 
 	public void setProjects(Set<Project> projects) {
 		this.projects = projects;
+		
 	}
 
 	public Task() {
@@ -30,6 +34,7 @@ public class Task implements java.io.Serializable {
 
 	public Task(Date due) {
 		this.due = due;
+		this.finished = new Boolean(Boolean.FALSE);
 	}
 
 	public Task(String task, Integer dur, Boolean finished, Date due) {
@@ -39,6 +44,7 @@ public class Task implements java.io.Serializable {
 		this.due = due;
 	}
 
+	
 	public Integer getId() {
 		return this.id;
 	}

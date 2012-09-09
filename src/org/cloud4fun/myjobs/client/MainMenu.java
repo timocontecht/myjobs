@@ -25,8 +25,8 @@ public class MainMenu extends Composite
 		
 		panel.setSize("20em", "100%");
 		panel.add( new ProjectsPanel(), "Projects", 4);
-		panel.add(new HTML("that"), new HTML("[that]"), 4);
-		panel.add(new HTML("the other"), new HTML("[the other]"), 4);
+		//panel.add(new HTML("that"), new HTML("[that]"), 4);
+		panel.add(new ReportMenu(), new HTML("Reports"), 4);
 		
 		initWidget(panel);
 	}

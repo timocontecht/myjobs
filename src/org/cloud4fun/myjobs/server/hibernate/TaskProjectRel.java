@@ -7,6 +7,11 @@ package org.cloud4fun.myjobs.server.hibernate;
  */
 public class TaskProjectRel implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9130288761266914349L;
+	
 	private Integer id;
 	private Integer taskId;
 	private Integer projectId;

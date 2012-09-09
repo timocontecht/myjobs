@@ -14,11 +14,15 @@
         <property name="dur" type="java.lang.Integer">
             <column name="dur" />
         </property>
-        <property name="finished" type="java.lang.Boolean">
+        <property name="finished" type="java.lang.Boolean" not-null="true">
             <column name="finished" />
         </property>
         <property name="due" type="date">
             <column name="due" length="10" not-null="true" />
         </property>
+        <set name="projects" table="TASK_PROJECT_REL" lazy="false">
+            <key column="task_id" />
+            <many-to-many class="org.cloud4fun.myjobs.server.hibernate.Project" column="project_id" />
+        </set>
     </class>
 </hibernate-mapping>

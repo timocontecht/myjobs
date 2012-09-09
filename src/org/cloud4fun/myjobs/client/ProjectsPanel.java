@@ -95,6 +95,8 @@ public class ProjectsPanel extends VerticalPanel
 	
 	MyJobsServiceAsync service = null;
 	List<ProjectDTO> projects = null;
-	Button addProject_btn = null;
+	Button addProject_btn = null; 
 	List<ProjectCheckBox> project_cbs = new ArrayList<ProjectCheckBox>();
+	
+	
 }

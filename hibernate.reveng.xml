@@ -4,5 +4,6 @@
 <hibernate-reverse-engineering>
 
 
-<table-filter match-schema="KANBAN" match-name=".*"/>
+	<table-filter match-schema="KANBAN" match-name=".*" />
+	<table catalog="" schema="" name="TABLE_0"></table>
 </hibernate-reverse-engineering>

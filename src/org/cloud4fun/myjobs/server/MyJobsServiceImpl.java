@@ -10,6 +10,7 @@ import org.cloud4fun.myjobs.server.hibernate.Task;
 import org.cloud4fun.myjobs.server.hibernate.WorkUnit;
 import org.cloud4fun.myjobs.shared.FieldVerifier;
 import org.cloud4fun.myjobs.shared.ProjectDTO;
+import org.cloud4fun.myjobs.shared.ReportDTO;
 import org.cloud4fun.myjobs.shared.TaskDTO;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -151,4 +152,55 @@ public class MyJobsServiceImpl extends RemoteServiceServlet implements
 		session.getTransaction().commit();// TODO Auto-generated method stub
 		return "Added a work unit for " + task.getTask();
 	}
+
+	
+	@Override
+	public ReportDTO getReport(ReportDTO.ReportType rt) throws IllegalArgumentException {
+		
+		
+		return dailySummaryDB(rt);
+		
+		
+	}
+	  
+	
+	public ReportDTO dailySummaryDB(ReportDTO.ReportType rt) 
+	{
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		/* select PROJECT.project, COUNT(*) 
+		 * from PROJECT, TASK_PROJECT_REL, WORK_UNIT 
+		 * where WORK_UNIT.task_id = TASK_PROJECT_REL.task_id 
+		 * 		AND TASK_PROJECT_REL .project_id = PROJECT.id 
+		 * 		AND DATE(WORK_UNIT.worked_on) = DATE(NOW()) 
+		 * 		GROUP BY PROJECT.id;
+		 */
+		Query q;  
+		
+		if (rt == ReportDTO.ReportType.DAILY)
+		{
+			q= session.createQuery("select p.project, count(*) from Project p, TaskProjectRel tp, WorkUnit wu " +
+					"where wu.taskId = tp.taskId " +
+					"AND tp.projectId = p.id " +
+					"AND DATE(wu.workedOn) = DATE(NOW()) " +
+					"GROUP BY p.id");
+		}
+		else
+		{
+			q = session.createSQLQuery("select PROJECT.project, COUNT(*)  FROM PROJECT, TASK_PROJECT_REL, WORK_UNIT " +
+					"where WORK_UNIT.task_id = TASK_PROJECT_REL.task_id " +
+					"AND TASK_PROJECT_REL.project_id = PROJECT.id " +
+					"AND WORK_UNIT.worked_on between date_sub(CURDATE(), interval 1 week) and now() " +
+					"GROUP BY PROJECT.id;");
+		}
+		
+		List result = q.list();
+		session.getTransaction().commit();
+		
+		return new ReportDTO(result);
+	}
+
+	
+	
 }
