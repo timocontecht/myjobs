@@ -2,6 +2,8 @@ package org.cloud4fun.myjobs.client;
 
 import org.cloud4fun.myjobs.shared.TaskDTO;
 
+import com.allen_sauer.gwt.voices.client.Sound;
+import com.allen_sauer.gwt.voices.client.SoundController;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -60,7 +62,7 @@ public class TimerDlg extends DialogBox
 	
 	public class Countdown extends Timer 
 	{
-        int count = 60 * 25; //25 minutes 
+        int count = 1; //60 * 25; //25 minutes 
         MyJobsServiceAsync service = null;
         
         public void run() {
@@ -71,6 +73,11 @@ public class TimerDlg extends DialogBox
         	
         	
         	if(count==0) {
+        		SoundController soundController = new SoundController();
+        		Sound sound = soundController.createSound(Sound.MIME_TYPE_AUDIO_OGG_SPEEX,
+        		        "37747__quilt__blues-for-the-masses-01.ogg");
+
+        		sound.play();
         		hide();
 	            this.cancel(); //cancel the timer -- important!
 	            
