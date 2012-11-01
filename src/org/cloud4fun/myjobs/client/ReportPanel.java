@@ -16,7 +16,10 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 
 public class ReportPanel extends ScrollPanel {
 	
-	
+	public ReportPanel()
+	{
+		
+	}
 	
 	public ReportPanel(ReportDTO reportList)
 	{

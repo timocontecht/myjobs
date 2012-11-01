@@ -1,6 +1,7 @@
 package org.cloud4fun.myjobs.server;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.cloud4fun.myjobs.server.hibernate.WorkUnit;
 import org.cloud4fun.myjobs.shared.FieldVerifier;
 import org.cloud4fun.myjobs.shared.ProjectDTO;
 import org.cloud4fun.myjobs.shared.ReportDTO;
+import org.cloud4fun.myjobs.shared.ReportDTO.ReportType;
 import org.cloud4fun.myjobs.shared.TaskDTO;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -199,6 +201,38 @@ public class MyJobsServiceImpl extends RemoteServiceServlet implements
 		session.getTransaction().commit();
 		
 		return new ReportDTO(result);
+	}
+
+	@Override
+	public ReportDTO getPeriodReport(ReportType rt, Date start, Date end)
+			throws IllegalArgumentException 
+	{
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		/* select PROJECT.project, COUNT(*) 
+		 * from PROJECT, TASK_PROJECT_REL, WORK_UNIT 
+		 * where WORK_UNIT.task_id = TASK_PROJECT_REL.task_id 
+		 * 		AND TASK_PROJECT_REL .project_id = PROJECT.id 
+		 * 		AND DATE(WORK_UNIT.worked_on) = DATE(NOW()) 
+		 * 		GROUP BY PROJECT.id;
+		 */
+		Query q;  
+		
+		q = session.createSQLQuery("select PROJECT.project, COUNT(*)  FROM PROJECT, TASK_PROJECT_REL, WORK_UNIT " +
+				"where WORK_UNIT.task_id = TASK_PROJECT_REL.task_id " +
+				"AND TASK_PROJECT_REL.project_id = PROJECT.id " +
+				"AND WORK_UNIT.worked_on between ? and ?" +
+				"GROUP BY PROJECT.id;")
+				.setParameter(0, start)
+				.setParameter(1, end);
+		
+		
+		List result = q.list();
+		session.getTransaction().commit();
+		
+		return new ReportDTO(result);
+		
 	}
 
 	

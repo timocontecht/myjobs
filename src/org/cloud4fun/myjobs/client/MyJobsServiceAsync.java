@@ -1,5 +1,6 @@
 package org.cloud4fun.myjobs.client;
 
+import java.util.Date;
 import java.util.List;
 
 import org.cloud4fun.myjobs.shared.ProjectDTO;
@@ -20,5 +21,6 @@ public interface MyJobsServiceAsync {
 	 
 	// reports
 	void getReport(ReportDTO.ReportType rt, AsyncCallback<ReportDTO> callback) throws IllegalArgumentException;
+	void getPeriodReport(ReportDTO.ReportType rt, Date start, Date end, AsyncCallback<ReportDTO> callback) throws IllegalArgumentException;
 	
 }

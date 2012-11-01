@@ -32,6 +32,10 @@ public class ReportMenu extends VerticalPanel
 		weeklySummary_rb = new RadioButton("reportGroup", "Weekly Summary");
 		weeklySummary_rb.addClickHandler(new ReportClickHandler());
 		add(weeklySummary_rb);
+		
+		periodSummary_rb = new RadioButton("reportGroup", "Period Summary");
+		periodSummary_rb.addClickHandler(new ReportClickHandler());
+		add(periodSummary_rb);
 	}
 	
 	private void createReport(ReportDTO.ReportType rt)
@@ -79,6 +83,12 @@ public class ReportMenu extends VerticalPanel
 				createReport(ReportDTO.ReportType.WEEKLY);
 			}
 			
+			if (event.getSource() == periodSummary_rb)
+			{
+				PeriodReportPanel panel = new PeriodReportPanel();
+				MainDockPanel.getInstance().addPanel(panel);
+			}
+			
 			
 		}
 		
@@ -88,6 +98,7 @@ public class ReportMenu extends VerticalPanel
 	MyJobsServiceAsync service = null;
 	RadioButton dailySummary_rb;
 	RadioButton weeklySummary_rb;
+	RadioButton periodSummary_rb;
 	
 	
 }

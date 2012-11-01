@@ -1,5 +1,6 @@
 package org.cloud4fun.myjobs.client;
 
+import java.util.Date;
 import java.util.List;
 
 import org.cloud4fun.myjobs.shared.ProjectDTO;
@@ -21,5 +22,6 @@ public interface MyJobsService extends RemoteService {
 	
 	// reports
 	ReportDTO getReport(ReportDTO.ReportType rt) throws IllegalArgumentException;
+	ReportDTO getPeriodReport(ReportDTO.ReportType rt, Date start, Date end) throws IllegalArgumentException;
 	
 }

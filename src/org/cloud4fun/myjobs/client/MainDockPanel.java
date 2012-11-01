@@ -47,7 +47,14 @@ public class MainDockPanel extends Composite {
 		thePanel.add(centerPanel);
 	}
 	
-	
+	public void addPanel(Panel p)
+	{
+		if (centerPanel != null)
+			thePanel.remove(centerPanel);
+		
+		centerPanel = p;
+		thePanel.add(centerPanel);
+	}
 	
 
 }

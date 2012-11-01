@@ -2,6 +2,7 @@ package org.cloud4fun.myjobs.shared;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ReportDTO implements Serializable {
@@ -53,10 +54,14 @@ public class ReportDTO implements Serializable {
 
 	private ArrayList<String> projects;
 	private ArrayList<Long> units;
+	
+	private Date start;
+	private Date end;
 
 	public enum ReportType
 	{
 		DAILY,
-		WEEKLY
+		WEEKLY,
+		PERIOD
 	}
 }
