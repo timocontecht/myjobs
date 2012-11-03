@@ -62,7 +62,7 @@ public class TimerDlg extends DialogBox
 	
 	public class Countdown extends Timer 
 	{
-        int count = 1; //60 * 25; //25 minutes 
+        int count = 60 * 25; //25 minutes 
         MyJobsServiceAsync service = null;
         
         public void run() {
