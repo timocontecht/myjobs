@@ -20,6 +20,8 @@ public interface MyJobsService extends RemoteService {
 	List<TaskDTO> getTasks(List<ProjectDTO> projects) throws IllegalArgumentException;
 	String addWorkUnit(TaskDTO task) throws IllegalArgumentException;
 	
+	String addTask(String taskname, List<ProjectDTO> projects);
+	
 	// reports
 	ReportDTO getReport(ReportDTO.ReportType rt) throws IllegalArgumentException;
 	ReportDTO getPeriodReport(ReportDTO.ReportType rt, Date start, Date end) throws IllegalArgumentException;

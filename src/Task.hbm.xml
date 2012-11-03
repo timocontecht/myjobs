@@ -14,11 +14,11 @@
         <property name="dur" type="java.lang.Integer">
             <column name="dur" />
         </property>
-        <property name="finished" type="java.lang.Boolean" not-null="true">
+        <property name="finished" type="java.lang.Boolean" >
             <column name="finished" />
         </property>
         <property name="due" type="date">
-            <column name="due" length="10" not-null="true" />
+            <column name="due" length="10"  />
         </property>
         <set name="projects" table="TASK_PROJECT_REL" lazy="false">
             <key column="task_id" />

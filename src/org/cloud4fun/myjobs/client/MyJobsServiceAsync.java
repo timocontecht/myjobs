@@ -19,6 +19,9 @@ public interface MyJobsServiceAsync {
 	 void getTasks(List<ProjectDTO> projects, AsyncCallback<List<TaskDTO>> callback);
 	 void addWorkUnit(TaskDTO task, AsyncCallback<String> callback) throws IllegalArgumentException;
 	 
+	 
+	 void addTask(String taskname, List<ProjectDTO> projects, AsyncCallback<String> callback);
+	 
 	// reports
 	void getReport(ReportDTO.ReportType rt, AsyncCallback<ReportDTO> callback) throws IllegalArgumentException;
 	void getPeriodReport(ReportDTO.ReportType rt, Date start, Date end, AsyncCallback<ReportDTO> callback) throws IllegalArgumentException;

@@ -8,6 +8,7 @@ import java.util.List;
 import org.cloud4fun.myjobs.client.MyJobsService;
 import org.cloud4fun.myjobs.server.hibernate.Project;
 import org.cloud4fun.myjobs.server.hibernate.Task;
+import org.cloud4fun.myjobs.server.hibernate.TaskProjectRel;
 import org.cloud4fun.myjobs.server.hibernate.WorkUnit;
 import org.cloud4fun.myjobs.shared.FieldVerifier;
 import org.cloud4fun.myjobs.shared.ProjectDTO;
@@ -233,6 +234,37 @@ public class MyJobsServiceImpl extends RemoteServiceServlet implements
 		
 		return new ReportDTO(result);
 		
+	}
+
+	@Override
+	public String addTask(String taskname, List<ProjectDTO> projects) 
+	{
+		Task task = new Task();
+		task.setTask(taskname);
+		task.setFinished(false);
+		
+		
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		session.persist(task);
+		
+		String p_str = "";
+		
+		for (int i=0; i<projects.size(); i++)
+		{
+			TaskProjectRel tpr = new TaskProjectRel();
+			tpr.setProjectId(projects.get(i).getId());
+			tpr.setTaskId(task.getId());
+			session.persist(tpr);
+			p_str += ", ";
+			p_str += projects.get(i).getProject();
+			
+		}
+		
+		session.getTransaction().commit();// TODO Auto-generated method stub
+		return "Added a task to projects " + p_str;
 	}
 
 	

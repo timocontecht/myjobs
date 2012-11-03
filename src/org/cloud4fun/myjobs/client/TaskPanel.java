@@ -7,13 +7,18 @@ import org.cloud4fun.myjobs.shared.ProjectDTO;
 import org.cloud4fun.myjobs.shared.TaskDTO;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 
-public class TaskPanel extends ScrollPanel {
+public class TaskPanel extends VerticalPanel {
 	
 	
 	
@@ -44,13 +49,32 @@ public class TaskPanel extends ScrollPanel {
 		if (projects.size() > 0)
 			service.getTasks(projects, callback);
 		
+		addNewTaskButton();
+		
 	}
 	
+	private void addNewTaskButton() 
+	{
+		addNewTask = new Button("New Task");
+		addNewTask.addClickHandler(new ClickHandler()
+		{
+
+			@Override
+			public void onClick(ClickEvent event) {
+				AddTaskDlg dlg = new AddTaskDlg(projects);
+				dlg.show();
+				
+			}
+			
+		});
+		this.add(addNewTask);
+	}
+
 	private void buildGrid()
 	{
-		
+		this.add(tablePanel);
 		int row_size = tasks.size() + 1;
-		this.add(theGrid);
+		tablePanel.add(theGrid);
 		theGrid.clear();
 		theGrid.resize(row_size, 5	);
 		
@@ -91,4 +115,6 @@ public class TaskPanel extends ScrollPanel {
 	List<ProjectDTO> projects = null;
 	List<TaskDTO> tasks = null;
 	private static Grid theGrid = new Grid();
+	private static Button addNewTask;
+	private static ScrollPanel tablePanel = new ScrollPanel();
 }
